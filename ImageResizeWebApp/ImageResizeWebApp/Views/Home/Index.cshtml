@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Home Page";
+    @model string
 }
 
 <!-- Client side libs required  -->
@@ -48,7 +49,11 @@
         width: 50%;
     }
 </style>
-
+    <script type="text/javascript">
+        function onSuccess() {
+            console.log(arguments);
+        }
+    </script>
 
 <main>
     <div class="box header">
@@ -72,11 +77,11 @@
                 </div>
             </form>
         </div>
-        <div>
+        @*<div>
             <form action="/api/images/lastemotion"
                   class="latestimg"
                   method="get"
-                  >
+            >
                 <input type="submit" name="name" value="Calculate Emotion" />
                 <img src="#" alt="Life sucks, add an image to make it better" />
                 <div class="latestImage" id="latestImage">
@@ -84,7 +89,27 @@
                 </div>
                 <div id="emotionresponse"></div>
             </form>
+        </div>*@
+        <div>
+            <form 
+                class="latestimg"
+                data-ajax-url="/api/images/lastemotion"
+                data-ajax="true"
+                data-ajax-mode="replace"
+                data-ajax-method="get"
+                data-ajax-success="onSuccess"
+                data-ajax-update="#displayData">
+                <input type="submit" name="name" value="Calculate Emotion"/>
+                <img src="#" alt="Life sucks, add an image to make it better"/>
+                <div class="latestImage" id="latestImage">
+                    <img src="lastImage" alt=""/>
+                </div>
+                <div id="emotionresponse">
+                    {{model}}
+                </div>
+            </form>
         </div>
+        <div id="displayData"></div>
         <h2>Generated Thumbnails</h2>
             <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
             <div id="stored-images"></div>

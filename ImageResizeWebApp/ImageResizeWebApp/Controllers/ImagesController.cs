@@ -5,17 +5,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ImageResizeWebApp.Models;
 using Microsoft.Extensions.Options;
-
 using System.IO;
 using System.Net;
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Blob;
-using Microsoft.WindowsAzure.Storage.Auth;
 using System.Net.Http;
 using Microsoft.AspNetCore.Http;
 using ImageResizeWebApp.Helpers;
-using Microsoft.Net.Http.Headers;
 using MediaTypeHeaderValue = System.Net.Http.Headers.MediaTypeHeaderValue;
 
 namespace ImageResizeWebApp.Controllers
