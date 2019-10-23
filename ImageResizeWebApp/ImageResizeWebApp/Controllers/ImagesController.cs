@@ -148,7 +148,6 @@ namespace ImageResizeWebApp.Controllers
 
         }
 
-        // GET /api/images/thumbnails
         [HttpGet("lastemotion")]
         public async Task<string> GetLatestImageEmotion()
         {
@@ -156,15 +155,15 @@ namespace ImageResizeWebApp.Controllers
             try
             {
                 HttpClient client = new HttpClient();
-                
+
                 // Request headers.
                 client.DefaultRequestHeaders.Add(
-                    "Ocp-Apim-Subscription-Key", subscriptionKey);
+                    "Ocp-Apim-Subscription-Key", storageConfig.EmotionApiKey);
 
                 // Request parameters. A third optional parameter is "details".
                 string requestParameters = "returnFaceId=true&returnFaceLandmarks=false" +
                                            "&returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses," +
-                                           "emotion,hair,makeup,occlusion,accessories,blur,exposure,noise";
+                                           "emotion";
 
                 // Assemble the URI for the REST API Call.
                 string uri = uriBase + "?" + requestParameters;

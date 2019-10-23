@@ -34,38 +34,39 @@
         max-width: 400px;
     }
 
-    .dropzone .dz-message {
-        font-weight: 350;
-    }
+        .dropzone .dz-message {
+            font-weight: 350;
+        }
 
-    .dropzone .dz-message .note {
-        font-family: sans-serif;
-        font-size: 18px;
-        font-weight: 200;
-        display: block;
-        margin-top 1.5rem;
-    }
+            .dropzone .dz-message .note {
+                font-family: sans-serif;
+                font-size: 18px;
+                font-weight: 200;
+                display: block;
+                margin-top 1.5rem;
+            }
+
     .latestimg {
         width: 50%;
     }
 </style>
-    <script type="text/javascript">
-        function onSuccess() {
-            console.log(arguments);
-        }
-    </script>
+<script type="text/javascript">
+    function onSuccess() {
+        console.log(arguments);
+    }
+</script>
 
 <main>
     <div class="box header">
         <h1><span class="fa fa-user-circle-o"></span> <span id="page-title">ImageResizer</span></h1>
     </div>
-    
+
     <div class="box content">
         <hr>
         <h2>Upload photos</h2>
         <div>
             <form action="/api/images/upload"
-                  class="dropzone needsclick dz-clickable" 
+                  class="dropzone needsclick dz-clickable"
                   id="image-upload"
                   method="post"
                   enctype="multipart/form">
@@ -77,32 +78,18 @@
                 </div>
             </form>
         </div>
-        @*<div>
-            <form action="/api/images/lastemotion"
-                  class="latestimg"
-                  method="get"
-            >
+        <div>
+            <form class="latestimg"
+                  data-ajax-url="/api/images/lastemotion"
+                  data-ajax="true"
+                  data-ajax-mode="replace"
+                  data-ajax-method="get"
+                  data-ajax-success="onSuccess"
+                  data-ajax-update="#displayData">
                 <input type="submit" name="name" value="Calculate Emotion" />
                 <img src="#" alt="Life sucks, add an image to make it better" />
                 <div class="latestImage" id="latestImage">
                     <img src="lastImage" alt="" />
-                </div>
-                <div id="emotionresponse"></div>
-            </form>
-        </div>*@
-        <div>
-            <form 
-                class="latestimg"
-                data-ajax-url="/api/images/lastemotion"
-                data-ajax="true"
-                data-ajax-mode="replace"
-                data-ajax-method="get"
-                data-ajax-success="onSuccess"
-                data-ajax-update="#displayData">
-                <input type="submit" name="name" value="Calculate Emotion"/>
-                <img src="#" alt="Life sucks, add an image to make it better"/>
-                <div class="latestImage" id="latestImage">
-                    <img src="lastImage" alt=""/>
                 </div>
                 <div id="emotionresponse">
                     {{model}}
@@ -111,24 +98,26 @@
         </div>
         <div id="displayData"></div>
         <h2>Generated Thumbnails</h2>
-            <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
-            <div id="stored-images"></div>
+        <!-- <p><span id="gallery-note">Gallery refreshes from storage container image links every 5 seconds.</span></p> -->
+        <div id="stored-images"></div>
 
-            <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
-            <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
-                <div class="slides"></div>
-                <h3 class="title"></h3>
-                <a class="prev">‹</a>
-                <a class="next">›</a>
-                <a class="play-pause"></a>
-                <ol class="indicator"></ol>
-            </div>
-     </div>
+        <!-- The Gallery as inline carousel, can be positioned anywhere on the page -->
+        <div id="blueimp-gallery-carousel" class="blueimp-gallery blueimp-gallery-carousel">
+            <div class="slides"></div>
+            <h3 class="title"></h3>
+            <a class="prev">‹</a>
+            <a class="next">›</a>
+            <a class="play-pause"></a>
+            <ol class="indicator"></ol>
+        </div>
+    </div>
     <div class="box footer">
         <hr>
         <div class="privacy">
-            <p>This app has no official privacy policy. Your data will be uploaded to a service in order produce a picture.
-                Your images will be public once you upload them and there is no automated way to remove them.</p>
+            <p>
+                This app has no official privacy policy. Your data will be uploaded to a service in order produce a picture.
+                Your images will be public once you upload them and there is no automated way to remove them.
+            </p>
         </div>
     </div>
 </main>
@@ -137,6 +126,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
+
 
 <script>
     // init gallery for later use
@@ -145,30 +136,30 @@
     // Grab links for images from backend api
     function fetchImageLinks() {
         // Fetch images
-        $.get("api/Images/thumbnails", function(fetchedImageLinks) {
+        $.get("api/Images/thumbnails", function (fetchedImageLinks) {
             console.log(fetchedImageLinks)
 
             // Check if anything is in there
-            if ( _.isEmpty(fetchedImageLinks) ){
+            if (_.isEmpty(fetchedImageLinks)) {
                 console.log('empty fetched')
-                // do nothing  
+                // do nothing
             } else {
                 // Check if we have a gallery initialized
-                if ( _.isEmpty(gallery) ) {
+                if (_.isEmpty(gallery)) {
                     // initialize gallery
                     gallery = blueimp.Gallery(
-                                fetchedImageLinks, // gallery links array
-                                {
-                                    container: '#blueimp-gallery-carousel',
-                                    carousel: true
-                                } // gallery options
-                            );                    
+                        fetchedImageLinks, // gallery links array
+                        {
+                            container: '#blueimp-gallery-carousel',
+                            carousel: true
+                        } // gallery options
+                    );
                 } else {
                     // check if images are equal to array
                     console.log('currently in gallery:')
                     console.log(gallery.list)
                     var imageLinksEqual = _.isEqual(_.sortBy(gallery.list.map(s => s.split("?")[0])), _.sortBy(fetchedImageLinks.map(s => s.split("?")[0])))
-                    if ( imageLinksEqual ) {
+                    if (imageLinksEqual) {
                         console.log('images arr are equal')
                         // do nothing
                     } else {
@@ -185,17 +176,17 @@
                         // Force image load
                         gallery.next();
                     }
-                }       
-            }     
+                }
+            }
         });
     }
 
     // Start first interval
     fetchImageLinks()
-    
-    setInterval(function() {
+
+    setInterval(function () {
         fetchImageLinks()
-    }, 5000) 
+    }, 5000)
 
     /* Dropzone */
     // "imageUpload" is the camelized version of the HTML element's ID
@@ -203,12 +194,12 @@
         paramName: "files", // The name that will be used to transfer the file
         dictDefaultMessage: "Drop files here or Click to Upload",
         addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
-        init: function() {
+        init: function () {
             myDropzone = this;
-            myDropzone.on("success", function(file, response) {
+            myDropzone.on("success", function (file, response) {
                 console.log("Success");
                 myDropzone.removeFile(file);
-            });                    
+            });
         }
     };
 </script>

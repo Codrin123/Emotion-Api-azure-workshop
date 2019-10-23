@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace ImageResizeWebApp.Models
+﻿namespace ImageResizeWebApp.Models
 {
     public class AzureStorageConfig
     {
@@ -12,5 +7,6 @@ namespace ImageResizeWebApp.Models
         public string QueueName { get; set; }
         public string ImageContainer { get; set; }
         public string ThumbnailContainer { get; set; }
+        public string EmotionApiKey { get; set; }
     }
 }
