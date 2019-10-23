@@ -22,7 +22,7 @@ namespace ImageResizeWebApp.Controllers
         const string subscriptionKey = "23acf09bf8b94de483f81134a75233e4";
 
         const string uriBase =
-            "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+            "/face/v1.0/detect";
 
         private string latestImage = "";
 
@@ -166,7 +166,7 @@ namespace ImageResizeWebApp.Controllers
                                            "emotion";
 
                 // Assemble the URI for the REST API Call.
-                string uri = uriBase + "?" + requestParameters;
+                string uri = storageConfig.EmotionApiEndpoint + uriBase + "?" + requestParameters;
 
                 HttpResponseMessage response;
                 var url = GetTGetLastImagehumbNail();
